@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>File Sorter - Organize Your Digital Life</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Geist:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link rel="icon" href="/static/favicon.png" type="image/png">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface-variant": "#474556",
+                        "outline": "#787587",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-container": "#00566a",
+                        "secondary-fixed": "#b6ebff",
+                        "primary-fixed": "#e4dfff",
+                        "primary-container": "#3e11d3",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-surface": "#131b2e",
+                        "inverse-on-surface": "#eef0ff",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#2e2dbe",
+                        "secondary-container": "#00d2ff",
+                        "secondary": "#00677f",
+                        "surface-bright": "#faf8ff",
+                        "surface-variant": "#dae2fd",
+                        "on-secondary-fixed-variant": "#004e60",
+                        "inverse-primary": "#c7bfff",
+                        "tertiary": "#1000a8",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed-variant": "#3f13d4",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed": "#001f28",
+                        "surface-container-highest": "#dae2fd",
+                        "tertiary-fixed": "#e1e0ff",
+                        "on-background": "#131b2e",
+                        "on-tertiary-container": "#abadff",
+                        "surface": "#faf8ff",
+                        "background": "#faf8ff",
+                        "primary-fixed-dim": "#c7bfff",
+                        "surface-tint": "#583ceb",
+                        "error-container": "#ffdad6",
+                        "primary": "#29009d",
+                        "on-tertiary-fixed": "#07006c",
+                        "surface-container-high": "#e2e7ff",
+                        "surface-dim": "#d2d9f4",
+                        "inverse-surface": "#283044",
+                        "on-primary-fixed": "#170065",
+                        "on-secondary": "#ffffff",
+                        "surface-container-low": "#f2f3ff",
+                        "surface-container": "#eaedff",
+                        "outline-variant": "#c8c4d8",
+                        "on-tertiary-fixed-variant": "#2f2ebe",
+                        "tertiary-fixed-dim": "#c0c1ff",
+                        "on-primary-container": "#b3aaff",
+                        "secondary-fixed-dim": "#47d6ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-desktop": "48px",
+                        "margin-mobile": "16px",
+                        "gutter": "24px",
+                        "base": "8px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "headline-xl-mobile": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-xl": ["Inter"],
+                        "label-sm": ["Geist"],
+                        "code-md": ["Geist"]
+                    },
+                    "fontSize": {
+                        "headline-xl-mobile": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-xl": ["60px", {"lineHeight": "72px", "letterSpacing": "-0.04em", "fontWeight": "800"}],
+                        "label-sm": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "code-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #faf8ff; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .kinetic-gradient {
+            background: linear-gradient(180deg, #29009d 0%, #3e11d3 100%);
+        }
+        .kinetic-hover:hover {
+            background: linear-gradient(180deg, #3e11d3 0%, #00d2ff 100%);
+            transform: scale(1.02);
+            transition: all 0.3s ease;
+        }
+        .speed-line {
+            position: relative;
+        }
+        .speed-line::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10%;
+            height: 80%;
+            width: 2px;
+            background: #00d2ff;
+        }
+        /* Slider Custom Styles */
+        .slider-container {
+            overflow: hidden;
+            position: relative;
+        }
+        .slider-track {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .slider-card {
+            flex: 0 0 100%;
+        }
+        @media (min-width: 768px) {
+            .slider-card {
+                flex: 0 0 50%;
+            }
+        }
+        @media (min-width: 1024px) {
+            .slider-card {
+                flex: 0 0 33.333333%;
+            }
+        }
+    </style>
+</head>
+<body class="text-on-surface selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- TopNavBar -->
+<nav class="bg-surface/80 backdrop-blur-md fixed top-0 w-full z-50 shadow-sm border-b border-outline-variant/30 h-20">
+<div class="flex justify-between items-center px-margin-desktop max-w-container-max mx-auto h-full">
+<div class="font-headline-md text-headline-md font-bold text-primary">
+<div class="flex items-center gap-2">
+<img alt="File Sorter Logo" class="h-8 w-8" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmcx4M3abwXizp39VOoGGS4mmC-fFt59HcO4EeYQ1h_qqtP9Sf2uT2PwzOFukCs--ReaZATbV-TpGkf6Qm8CSku1X92jkKFDRDCI6yf5zpnyws7tuQ8NHJjSXgjJR40-eFcLne4_HQHywXl7uIhrY1dHzVJdlQuwUVapDZb3m2aagNbVUKYo_nOWWGdEncmOmHaIyL6Ny58_ne4U-O3SRzG4Yx9KpWKzG5mMcCarbjuGHAYfou-x6dmadGH3aQfEIGgQ"/>
+<span>File Sorter</span>
+</div>
+</div>
+<div class="hidden md:flex gap-gutter items-center">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#features">Features</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#performance">Speed</a>
+<!-- <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Security</a> -->
+ <a href="/download">
+<button class="bg-primary hover:opacity-90 transition-all text-on-primary font-label-sm text-label-sm px-6 py-2.5 rounded-full active:scale-95 duration-200">
+                    Download Now
+                </button>
+</a>
+</div>
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</nav>
+<main class="pt-20">
+<!-- Hero Section -->
+<section class="relative overflow-hidden py-24 md:py-20 bg-surface">
+<div class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 lg:grid-cols-2 gap-gutter items-center">
+<div class="z-10 text-center lg:text-left">
+<div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary font-label-sm mb-6 border border-primary/20">
+<span class="material-symbols-outlined text-[18px]">shield</span>100% Secure &amp; Local: No internet required
+                    </div>
+<h1 class="font-headline-xl text-headline-xl-mobile md:text-headline-xl text-on-surface mb-6 tracking-tight">
+                        Organize Your Digital Life in <span class="text-primary italic">Under 1 Second.</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-10 max-w-xl mx-auto lg:mx-0">File Sorter is a lightweight Windows desktop application that automatically organizes files into categorized folders such as Documents, Images, Videos, and Others with a single click.</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+<a href="/download">
+<button class="kinetic-gradient text-on-primary px-8 py-4 rounded-xl font-headline-md text-body-lg kinetic-hover flex items-center justify-center gap-2 group">
+<span class="material-symbols-outlined">download</span>
+                            Download for Windows
+                        </button>
+                        </a>
+<!-- <button class="border border-primary text-primary px-8 py-4 rounded-xl font-headline-md text-body-lg hover:bg-primary/5 transition-all">
+                            View Demo
+                        </button> -->
+</div>
+</div>
+<div class="relative mt-12 lg:mt-0">
+<div class="rounded-2xl overflow-hidden shadow-2xl border border-outline-variant/30 bg-surface-container-highest">
+<img alt="File Sorter Visualization" class="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhcmFFGXkwvTokbbixU83Sk4OzZsJhRe61SriO5pmMQ-LaxCF9gNeeaCPFFwCLgENIHRqG0T0ZUQQIu3jtL_Ma2KSHAoVF-r7aBAEcjkMq5910zyHc7WYNYYWhjG6OsK17V-6W2ijS25-QAAsajPJ4JH0t-kbr--1kNdx8wGtmBWHxGSfVMkaMoXCnI0dmfGKvFh1wI04UOxOPxIxZQSaFs3fBCyDQzowSxNc6ILtx1f_HG8hUFl-4"/>
+</div>
+<div class="absolute -bottom-6 -right-6 w-32 h-32 bg-secondary-container/20 rounded-full blur-3xl -z-10"></div>
+<div class="absolute -top-6 -left-6 w-48 h-48 bg-primary-container/10 rounded-full blur-3xl -z-10"></div>
+</div>
+</div>
+</section>
+<!-- Performance Section -->
+<section class="py-24 bg-surface-container-low" id="performance">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="bg-white rounded-[2rem] p-8 md:p-16 shadow-sm border border-outline-variant/50 relative overflow-hidden">
+<div class="flex flex-col md:flex-row items-center gap-12">
+<div class="flex-1">
+<div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-secondary-container/20 text-secondary font-label-sm mb-6">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+                                Computational Intelligence
+                            </div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-6">Extreme Performance by Design</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8">File Sorter is a lightweight Windows desktop application built for speed and simplicity. It's a high-speed sorting engine optimized for multi-core processors, categorizing thousands of files simultaneously without breaking a sweat.</p>
+<div class="grid grid-cols-2 gap-8">
+<div class="speed-line pl-6">
+<div class="text-headline-lg font-bold text-primary">0.8s</div>
+<div class="font-label-sm text-outline uppercase tracking-wider">Avg. Sort Time</div>
+</div>
+<div class="speed-line pl-6">
+<div class="text-headline-lg font-bold text-primary">100+</div>
+<div class="font-label-sm text-outline uppercase tracking-wider">Files Handled</div>
+</div>
+</div>
+</div>
+<div class="flex-1 flex justify-center">
+<div class="relative w-64 h-64 flex items-center justify-center">
+<div class="absolute w-full h-full border-4 border-dashed border-primary/20 rounded-full animate-[spin_10s_linear_infinite]"></div>
+<div class="absolute w-4/5 h-4/5 border-2 border-secondary/30 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
+<div class="relative z-10 text-center">
+<span class="material-symbols-outlined text-primary text-[64px] animate-pulse">speed</span>
+<div class="font-headline-md text-primary mt-2">Instant</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Features Section (Slider Implementation) -->
+<section class="py-24" id="features">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-4">Precision Categorization</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">
+                        Say goodbye to digital clutter. Our algorithms handle every file type with surgical precision.
+                    </p>
+</div>
+<div class="relative px-12 group">
+<!-- Carousel Navigation -->
+<button class="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white border border-outline-variant shadow-md text-primary flex items-center justify-center hover:bg-primary hover:text-on-primary transition-all active:scale-90" id="prevBtn">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white border border-outline-variant shadow-md text-primary flex items-center justify-center hover:bg-primary hover:text-on-primary transition-all active:scale-90" id="nextBtn">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+<div class="slider-container">
+<div class="slider-track" id="sliderTrack">
+<!-- Feature Card 1: Documents -->
+<div class="slider-card px-3">
+<div class="h-full group bg-white p-8 rounded-2xl border border-outline-variant shadow-sm hover:shadow-lg transition-all duration-300 speed-line">
+<div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-on-primary transition-all">
+<span class="material-symbols-outlined">description</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-3">Documents</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                                        PDFs, DOCX, and spreadsheets organized instantly into semantic subfolders based on project or date.
+                                    </p>
+<div class="mt-6 flex flex-wrap gap-2">
+<span class="px-3 py-1 rounded-full bg-surface-container-low text-primary text-[12px] font-medium">.pdf</span>
+<span class="px-3 py-1 rounded-full bg-surface-container-low text-primary text-[12px] font-medium">.docx</span>
+<span class="px-3 py-1 rounded-full bg-surface-container-low text-primary text-[12px] font-medium">.xlsx</span>
+</div>
+</div>
+</div>
+<!-- Feature Card 2: Images -->
+<div class="slider-card px-3">
+<div class="h-full group bg-white p-8 rounded-2xl border border-outline-variant shadow-sm hover:shadow-lg transition-all duration-300 speed-line">
+<div class="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary mb-6 group-hover:bg-secondary group-hover:text-on-primary transition-all">
+<span class="material-symbols-outlined">image</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-3">Images</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                                        Your entire photo library, sorted by high-resolution dates or file types, ensuring you never lose a memory.
+                                    </p>
+<div class="mt-6 flex flex-wrap gap-2">
+<span class="px-3 py-1 rounded-full bg-surface-container-low text-secondary text-[12px] font-medium">.jpg</span>
+<span class="px-3 py-1 rounded-full bg-surface-container-low text-secondary text-[12px] font-medium">.png</span>
+<span class="px-3 py-1 rounded-full bg-surface-container-low text-secondary text-[12px] font-medium">.raw</span>
+</div>
+</div>
+</div>
+<!-- Feature Card 3: Videos -->
+<div class="slider-card px-3">
+<div class="h-full group bg-white p-8 rounded-2xl border border-outline-variant shadow-sm hover:shadow-lg transition-all duration-300 speed-line">
+<div class="w-12 h-12 rounded-xl bg-tertiary-container/10 flex items-center justify-center text-tertiary mb-6 group-hover:bg-tertiary group-hover:text-on-primary transition-all">
+<span class="material-symbols-outlined">movie</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-3">Videos</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                                        Keep your media library clean and accessible. Separate clips, movies, and project exports effortlessly.
+                                    </p>
+<div class="mt-6 flex flex-wrap gap-2">
+<span class="px-3 py-1 rounded-full bg-surface-container-low text-tertiary text-[12px] font-medium">.mp4</span>
+<span class="px-3 py-1 rounded-full bg-surface-container-low text-tertiary text-[12px] font-medium">.mov</span>
+<span class="px-3 py-1 rounded-full bg-surface-container-low text-tertiary text-[12px] font-medium">.mkv</span>
+</div>
+</div>
+</div>
+<!-- Feature Card 4: Audios -->
+<div class="slider-card px-3">
+<div class="h-full group bg-white p-8 rounded-2xl border border-outline-variant shadow-sm hover:shadow-lg transition-all duration-300 speed-line">
+<div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-on-primary transition-all">
+<span class="material-symbols-outlined">music_note</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-3">Audios</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                                        Crystal clear organization for your music library and voice recordings, sorted by artist or album metadata.
+                                    </p>
+<div class="mt-6 flex flex-wrap gap-2">
+<span class="px-3 py-1 rounded-full bg-surface-container-low text-primary text-[12px] font-medium">.mp3</span>
+<span class="px-3 py-1 rounded-full bg-surface-container-low text-primary text-[12px] font-medium">.wav</span>
+<span class="px-3 py-1 rounded-full bg-surface-container-low text-primary text-[12px] font-medium">.flac</span>
+</div>
+</div>
+</div>
+<!-- Feature Card 5: Archives -->
+<div class="slider-card px-3">
+<div class="h-full group bg-white p-8 rounded-2xl border border-outline-variant shadow-sm hover:shadow-lg transition-all duration-300 speed-line">
+<div class="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary mb-6 group-hover:bg-secondary group-hover:text-on-primary transition-all">
+<span class="material-symbols-outlined">archive</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-3">Archives</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                                        Keep your compressed backups and project bundles neatly tucked away in dedicated storage folders.
+                                    </p>
+<div class="mt-6 flex flex-wrap gap-2">
+<span class="px-3 py-1 rounded-full bg-surface-container-low text-secondary text-[12px] font-medium">.zip</span>
+<span class="px-3 py-1 rounded-full bg-surface-container-low text-secondary text-[12px] font-medium">.rar</span>
+<span class="px-3 py-1 rounded-full bg-surface-container-low text-secondary text-[12px] font-medium">.7z</span>
+</div>
+</div>
+</div>
+<!-- Feature Card 6: Executables -->
+<div class="slider-card px-3">
+<div class="h-full group bg-white p-8 rounded-2xl border border-outline-variant shadow-sm hover:shadow-lg transition-all duration-300 speed-line">
+<div class="w-12 h-12 rounded-xl bg-tertiary-container/10 flex items-center justify-center text-tertiary mb-6 group-hover:bg-tertiary group-hover:text-on-primary transition-all">
+<span class="material-symbols-outlined">terminal</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-3">Executables</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                                        Isolate installers and application binaries to keep your downloads folder clean and secure.
+                                    </p>
+<div class="mt-6 flex flex-wrap gap-2">
+<span class="px-3 py-1 rounded-full bg-surface-container-low text-tertiary text-[12px] font-medium">.exe</span>
+<span class="px-3 py-1 rounded-full bg-surface-container-low text-tertiary text-[12px] font-medium">.msi</span>
+<span class="px-3 py-1 rounded-full bg-surface-container-low text-tertiary text-[12px] font-medium">.dmg</span>
+</div>
+</div>
+</div>
+<!-- Feature Card 7: Codes -->
+<div class="slider-card px-3">
+<div class="h-full group bg-white p-8 rounded-2xl border border-outline-variant shadow-sm hover:shadow-lg transition-all duration-300 speed-line">
+<div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-on-primary transition-all">
+<span class="material-symbols-outlined">code</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-3">Codes</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                                        Developer-friendly sorting for scripts, stylesheets, and source files across multiple languages.
+                                    </p>
+<div class="mt-6 flex flex-wrap gap-2">
+<span class="px-3 py-1 rounded-full bg-surface-container-low text-primary text-[12px] font-medium">.js</span>
+<span class="px-3 py-1 rounded-full bg-surface-container-low text-primary text-[12px] font-medium">.py</span>
+<span class="px-3 py-1 rounded-full bg-surface-container-low text-primary text-[12px] font-medium">.html</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Slider Indicators -->
+<div class="flex justify-center gap-2 mt-12" id="sliderIndicators">
+<!-- Dots will be generated via JS -->
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-24 bg-primary text-on-primary text-center">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg mb-6">Ready for a Clutter-Free Life?</h2>
+<p class="font-body-lg text-body-lg mb-10 text-primary-fixed max-w-xl mx-auto">
+                    Start using File Sorter to reclaim hours of their work week.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+    <a href="/download">
+<button class="bg-white text-primary px-10 py-4 rounded-xl font-headline-md text-body-lg hover:bg-primary-fixed transition-all active:scale-95">
+                        Download Now
+                    </button>
+                    </a>
+<button class="border border-white/30 text-white px-10 py-4 rounded-xl font-headline-md text-body-lg hover:bg-white/10 transition-all" onclick="window.open('/static/Case_Study.pdf', '_blank')">
+                        Support Documentation
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-low w-full py-12 border-t border-outline-variant/50">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-desktop max-w-container-max mx-auto gap-base">
+<div class="mb-8 md:mb-0 text-center md:text-left">
+<div class="font-headline-md text-headline-md font-bold text-on-surface mb-2">
+<div class="flex items-center gap-2">
+<img alt="File Sorter Logo" class="h-8 w-8" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB310AdcnfgnG7s1Xd366BTyZVDoyZpkORt8ze-0eza4cK0aLei8N5s98II4Vhy74qeZga58NxSFnglgOENbQhZd3zVVxQgVrd6FkQegiNI5fkuHrtZNrZG3lAY2WTAd_DwQCmjiz6b3GCRY21oUk52eRR_mIGkFCIV0HE717ctpUABq_Ex3Oe_q6ngs5d7hiS-ZcMdAH_Oc3ZTg86xBufGKJ618eyxQ7ysmGBXoR-UQ9cQ_4CZQ8KACvQO09NaBYas0g"/>
+<span>File Sorter</span>
+</div>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">
+                    © 2026 File Sorter by Kushagra Shrivastava. All rights reserved.
+                </p>
+</div>
+<div class="flex flex-wrap justify-center gap-gutter">
+<!-- <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a> -->
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="https://github.com/WanderingHippopotomus/FileSorter">Github</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors" href="/static/Case_Study.pdf" target="_blank">Support</a>
+</div>
+</div>
+</footer>
+<script>
+        // Carousel Logic
+        const track = document.getElementById('sliderTrack');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const indicatorsContainer = document.getElementById('sliderIndicators');
+        const cards = Array.from(track.children);
+        let currentIndex = 0;
+        let autoSlideTimer;
+
+        const getVisibleCards = () => {
+            if (window.innerWidth >= 1024) return 3;
+            if (window.innerWidth >= 768) return 2;
+            return 1;
+        };
+
+        const updateSlider = () => {
+            const visibleCards = getVisibleCards();
+            const maxIndex = cards.length - visibleCards;
+            
+            // Ensure index is within bounds
+            if (currentIndex > maxIndex) currentIndex = maxIndex;
+            if (currentIndex < 0) currentIndex = 0;
+
+            const percentage = -(currentIndex * (100 / visibleCards));
+            track.style.transform = `translateX(${percentage}%)`;
+            
+            updateIndicators();
+            
+            // Disable buttons if at ends
+            prevBtn.style.opacity = currentIndex === 0 ? '0.3' : '1';
+            prevBtn.style.pointerEvents = currentIndex === 0 ? 'none' : 'auto';
+            nextBtn.style.opacity = currentIndex === maxIndex ? '0.3' : '1';
+            nextBtn.style.pointerEvents = currentIndex === maxIndex ? 'none' : 'auto';
+        };
+
+        const createIndicators = () => {
+            indicatorsContainer.innerHTML = '';
+            const visibleCards = getVisibleCards();
+            const count = cards.length - visibleCards + 1;
+            
+            for (let i = 0; i < count; i++) {
+                const dot = document.createElement('button');
+                dot.className = `w-2 h-2 rounded-full transition-all duration-300 ${i === currentIndex ? 'bg-primary w-6' : 'bg-outline-variant'}`;
+                dot.onclick = () => {
+                    currentIndex = i;
+                    updateSlider();
+                    resetTimer();
+                };
+                indicatorsContainer.appendChild(dot);
+            }
+        };
+
+        const updateIndicators = () => {
+            const dots = indicatorsContainer.children;
+            Array.from(dots).forEach((dot, i) => {
+                dot.className = `w-2 h-2 rounded-full transition-all duration-300 ${i === currentIndex ? 'bg-primary w-6' : 'bg-outline-variant'}`;
+            });
+        };
+
+        const startAutoSlide = () => {
+            autoSlideTimer = setInterval(() => {
+                const visibleCards = getVisibleCards();
+                const maxIndex = cards.length - visibleCards;
+                if (currentIndex >= maxIndex) {
+                    currentIndex = 0;
+                } else {
+                    currentIndex++;
+                }
+                updateSlider();
+            }, 5000);
+        };
+
+        const resetTimer = () => {
+            clearInterval(autoSlideTimer);
+            startAutoSlide();
+        };
+
+        nextBtn.addEventListener('click', () => {
+            const visibleCards = getVisibleCards();
+            if (currentIndex < cards.length - visibleCards) {
+                currentIndex++;
+                updateSlider();
+                resetTimer();
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateSlider();
+                resetTimer();
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            createIndicators();
+            updateSlider();
+        });
+
+        // Initialize
+        createIndicators();
+        updateSlider();
+        startAutoSlide();
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body></html>

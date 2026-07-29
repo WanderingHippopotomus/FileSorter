@@ -1,9 +1,57 @@
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+env/
 
-logs.txt
+# PyInstaller
+build/
+dist/
 
+# Electron
+frontend/node_modules/
+frontend/dist/
+
+# Electron Builder
+release/
+out/
+
+# Backend executable output
+backend_dist/
+
+# Logs
+*.log
+
+# IDE
 .vscode/
 .idea/
 
-.env 
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.*
+
+# Python databases
+*.db
+*.sqlite3
+
+# Root Node.js
+node_modules/
+
+# Root frontend build (if applicable)
+dist/
+
+# Misc
+logs.txt
+*.exe
+
+website/static/*.exe

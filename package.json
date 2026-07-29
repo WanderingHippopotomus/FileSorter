@@ -1,0 +1,56 @@
+{
+  "name": "filesorter",
+  "version": "1.0.0",
+  "description": "A command-line Python application that automatically organizes files into categorized folders.",
+  "main": "electron/main.js",
+  "type": "commonjs",
+
+  "scripts": {
+    "frontend": "cd frontend && npm run dev",
+    "electron": "electron electron/main.js",
+    "dev": "concurrently \"npm run frontend\" \"wait-on http://localhost:5173 && npm run electron\"",
+    "build": "electron-builder"
+  },
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WanderingHippopotomus/FileSorter.git"
+  },
+
+  "license": "ISC",
+
+  "devDependencies": {
+    "concurrently": "^10.0.4",
+    "cross-env": "^10.1.0",
+    "electron": "^43.2.0",
+    "electron-builder": "^26.15.3",
+    "wait-on": "^9.1.0"
+  },
+
+  "build": {
+    "extraResources": [
+      {
+        "from": "backend_dist/backend",
+        "to": "backend"
+      }
+    ],
+    "appId": "com.wanderinghippopotomus.filesorter",
+    "productName": "File Sorter",
+
+    "directories": {
+      "output": "dist"
+    },
+
+    "files": [
+      "electron/**/*",
+      "frontend/dist/**/*",
+      "backend/**/*",
+      "package.json"
+    ],
+
+    "win": {
+      "target": "nsis",
+      "icon": "icon.ico"
+    }
+  }
+}
