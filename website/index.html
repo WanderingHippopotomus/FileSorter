@@ -162,7 +162,7 @@
 <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#features">Features</a>
 <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#performance">Speed</a>
 <!-- <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Security</a> -->
- <a href="https://github.com/WanderingHippopotomus/FileSorter/releases/download/v1.0.0/FileSorterSetup.exe">
+ <a href="#" onclick="startDownload(); return false;">
 <button class="bg-primary hover:opacity-90 transition-all text-on-primary font-label-sm text-label-sm px-6 py-2.5 rounded-full active:scale-95 duration-200">
                     Download Now
                 </button>
@@ -186,7 +186,7 @@
 </h1>
 <p class="font-body-lg text-body-lg text-on-surface-variant mb-10 max-w-xl mx-auto lg:mx-0">File Sorter is a lightweight Windows desktop application that automatically organizes files into categorized folders such as Documents, Images, Videos, and Others with a single click.</p>
 <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-<a href="https://github.com/WanderingHippopotomus/FileSorter/releases/download/v1.0.0/FileSorterSetup.exe">
+<a href="#" onclick="startDownload(); return false;">
 <button class="kinetic-gradient text-on-primary px-8 py-4 rounded-xl font-headline-md text-body-lg kinetic-hover flex items-center justify-center gap-2 group">
 <span class="material-symbols-outlined">download</span>
                             Download for Windows
@@ -398,7 +398,7 @@
                     Start using File Sorter to reclaim hours of their work week.
                 </p>
 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-    <a href="https://github.com/WanderingHippopotomus/FileSorter/releases/download/v1.0.0/FileSorterSetup.exe">
+    <a href="#" onclick="startDownload(); return false;">
 <button class="bg-white text-primary px-10 py-4 rounded-xl font-headline-md text-body-lg hover:bg-primary-fixed transition-all active:scale-95">
                         Download Now
                     </button>
@@ -432,6 +432,59 @@
 </div>
 </div>
 </footer>
+<!-- Download Notice Modal -->
+<div id="downloadModal"
+     class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50">
+
+    <div class="bg-white rounded-2xl p-8 max-w-lg w-[90%] shadow-2xl">
+        <h2 class="text-2xl font-bold text-primary mb-4">
+            Download Started
+        </h2>
+
+        <p class="text-gray-700 mb-4">
+            Your download should begin automatically.
+        </p>
+
+        <div class="bg-yellow-50 border border-yellow-300 rounded-lg p-4 mb-6">
+            <h3 class="font-semibold text-yellow-800 mb-2">
+                Windows Security Notice
+            </h3>
+
+            <p class="text-sm text-gray-700">
+                File Sorter is a newly released application and is not yet
+                digitally code signed. Windows Defender SmartScreen may display
+                a <strong>"Windows protected your PC"</strong> warning.
+            </p>
+
+            <ol class="list-decimal ml-5 mt-3 text-sm text-gray-700">
+                <li>Click <strong>More info</strong>.</li>
+                <li>Click <strong>Run anyway</strong>.</li>
+            </ol>
+
+            <p class="text-sm mt-3">
+                Only do this if you downloaded File Sorter from this official
+                website or the GitHub repository.
+            </p>
+        </div>
+
+        <div class="flex justify-end gap-3">
+            <a
+                href="https://github.com/WanderingHippopotomus/FileSorter"
+                target="_blank"
+                class="px-4 py-2 rounded-lg border"
+            >
+                View Source
+            </a>
+
+            <button
+                onclick="closeDownloadModal()"
+                class="bg-primary text-white px-4 py-2 rounded-lg"
+            >
+                Got it
+            </button>
+        </div>
+    </div>
+</div>
 <script>
         // Carousel Logic
         const track = document.getElementById('sliderTrack');
@@ -547,5 +600,33 @@
                 }
             });
         });
+        function showDownloadModal() {
+    document
+        .getElementById("downloadModal")
+        .classList.remove("hidden");
+
+    document
+        .getElementById("downloadModal")
+        .classList.add("flex");
+}
+
+function closeDownloadModal() {
+    document
+        .getElementById("downloadModal")
+        .classList.remove("flex");
+
+    document
+        .getElementById("downloadModal")
+        .classList.add("hidden");
+}
+
+function startDownload() {
+    window.open(
+        "https://github.com/WanderingHippopotomus/FileSorter/releases/latest/download/FileSorterSetup.exe",
+        "_blank"
+    );
+
+    showDownloadModal();
+}
     </script>
 </body></html>
